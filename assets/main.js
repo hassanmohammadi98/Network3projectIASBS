@@ -1,18 +1,16 @@
 var ws = new WebSocket('ws://localhost:5001');
 
-
 // generating new id for every user
 function randomID() {
     return Math.floor(Math.random() * 1e11);
-}
+}.
 
 //set default name for nickname in ex scenarios
 var Nickname = "JOHN DOE";
 
 ws.onopen = function () {
-
     console.log('Successfully connected to the server');
-
+    //console.log(document.cookie())    
     // get user ID if it's available or generating one
     var userID = localStorage.getItem("userID") || randomID();
     //save userID in local storage of browser 
@@ -36,11 +34,10 @@ ws.onmessage = function (data) {
 
     // here we should add new messages received from another clients 
     console.log("Data received from server (socket)", data);
-
     //parse data
     var jsonObject = JSON.parse(data.data);
     var username = jsonObject.name;
-    var message = jsonObject.message;
+    var message = jsonObject.message;  
     //make new dynamic post on messages box
     var message_container = document.createElement("div");
     message_container.id = "message";
