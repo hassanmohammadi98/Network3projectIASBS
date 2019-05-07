@@ -1,6 +1,6 @@
 var ws = new WebSocket('ws://localhost:5001');
 
-// generating new id for every user
+// generating valid id
 function getId() {
     var http = new XMLHttpRequest();
     http.open( "GET", 'http://localhost:8080/getId', false ); // false for synchronous request
@@ -19,7 +19,12 @@ ws.onopen = function () {
     console.log('Successfully connected to the server');
     //console.log(document.cookie())    
     // get user ID if it's available or generating one
-    var userID = localStorage.getItem("userID") ||  getId();
+    var userID = localStorage.getItem("userID") || getId();
+    var userInfo={
+        "id":userID
+    }
+    //sending client info to server for poke
+    ws.send(JSON.stringify(userInfo));
     //save userID in local storage of browser 
     localStorage.setItem("userID", userID);
 
@@ -31,7 +36,6 @@ ws.onopen = function () {
         Nickname = prompt("What is your Nickname ?");
 
         console.log("User nickname with userID " + userID + " is ", Nickname);
-
         //set Nickname user in localstorage of browser 
         localStorage.setItem(userID + "NAME", Nickname);
     }
