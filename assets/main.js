@@ -1,9 +1,9 @@
-var ws = new WebSocket('ws://localhost:5001');
+var ws = new WebSocket('ws://192.168.43.227:5001');
 
 // generating new id for every user
 function getId() {
     var http = new XMLHttpRequest();
-    http.open( "GET", 'http://localhost:8080/getId', false ); // false for synchronous request
+    http.open( "GET", 'http://192.168.43.227:8080/getId', false ); // false for synchronous request
     http.send( null );
     console.log( http.responseText);
     var obj = JSON.parse(http.responseText);
