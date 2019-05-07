@@ -1,9 +1,16 @@
 var ws = new WebSocket('ws://localhost:5001');
 
 // generating new id for every user
-function randomID() {
-    return Math.floor(Math.random() * 1e11);
-}.
+function getId() {
+    var http = new XMLHttpRequest();
+    http.open( "GET", 'http://localhost:8080/getId', false ); // false for synchronous request
+    http.send( null );
+    console.log( http.responseText);
+    var obj = JSON.parse(http.responseText);
+    var id=obj["id"];
+    console.log(id);
+    return id;
+}
 
 //set default name for nickname in ex scenarios
 var Nickname = "JOHN DOE";
@@ -12,7 +19,7 @@ ws.onopen = function () {
     console.log('Successfully connected to the server');
     //console.log(document.cookie())    
     // get user ID if it's available or generating one
-    var userID = localStorage.getItem("userID") || randomID();
+    var userID = localStorage.getItem("userID") ||  getId();
     //save userID in local storage of browser 
     localStorage.setItem("userID", userID);
 
@@ -89,8 +96,6 @@ function sendMessage() {
         return;
     }
 }
-
-
 
 // send  message after pushing enter button
 var message_input = document.getElementById("message_input");

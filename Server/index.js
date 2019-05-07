@@ -9,8 +9,19 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/../index.html'));
 });
 
-app.listen(8080);
+//generate vaild ID
+var id=0;
+app.get('/getId', function(req, res) {
+    id++;
+    var d={
+        "id":id
+    }
+    console.log(id);
+    res.send(d)
+});
 
+
+app.listen(8080);
 
 var server = require('ws').Server;
 var wss = new server({ port: 5001 });
